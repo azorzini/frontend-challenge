@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { List, ListItem, Divider, ListItemText, ListItemAvatar, Avatar, IconButton, ListItemSecondaryAction, Tooltip} from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import defaultThumbnail from '../assets/images/reddit.png';
+import {useDispatch, useSelector} from "react-redux";
+//import axios from "axios";
 
 const StyledList = styled(List)`
   width: 100%;
@@ -12,7 +14,10 @@ const ReadTitle = styled.span`
   color: #9b9b9b;
 `;
 
-const PostList = () => {
+const PostListItem = ({ pages }) => {
+
+  debugger;
+
   return (
     <StyledList>
       <ListItem button onClick={() => null} alignItems="flex-start">
@@ -94,5 +99,5 @@ const PostList = () => {
   );
 };
 
-export default PostList;
+export default PostListItem;
 
