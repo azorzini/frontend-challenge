@@ -21,9 +21,6 @@ const NavBar = () => {
                     <Title variant="h6">
                         Reddit posts
                     </Title>
-                    <StyledButton variant="contained" color="primary">
-                        Load More
-                    </StyledButton>
                     <StyledButton variant="contained" color="secondary">
                         Dismiss All
                     </StyledButton>

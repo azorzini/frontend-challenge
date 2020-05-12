@@ -1,50 +1,44 @@
 import React from 'react';
 import styled from 'styled-components';
-import { List, ListItem, Divider, ListItemText, ListItemAvatar, Avatar, IconButton, ListItemSecondaryAction, Tooltip} from '@material-ui/core';
+import { ListItem, Divider, ListItemText, ListItemAvatar, Avatar, IconButton, ListItemSecondaryAction, Tooltip} from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import defaultThumbnail from '../assets/images/reddit.png';
-import {useDispatch, useSelector} from "react-redux";
-//import axios from "axios";
-
-const StyledList = styled(List)`
-  width: 100%;
-`;
 
 const ReadTitle = styled.span`
   color: #9b9b9b;
 `;
 
-const PostListItem = ({ pages }) => {
-
-  debugger;
+const PostListItem = () => {
 
   return (
-    <StyledList>
-      <ListItem button onClick={() => null} alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={defaultThumbnail} />
-        </ListItemAvatar>
+    <>
+        <ListItem button onClick={() => null} alignItems="flex-start">
+          <ListItemAvatar>
+            <Avatar alt="Remy Sharp" src={defaultThumbnail} />
+          </ListItemAvatar>
 
-        <ListItemText
-          primary={<>
-            <ReadTitle>It’s still a work in progress but this is our his and hers set up so far!</ReadTitle>
-          </>}
-          secondary={
-            <>
-              Posted by <b>u/AwesomeAdviceBot</b> 17 hours ago
-            </>
-          }
-        />
-        <ListItemSecondaryAction>
-          <Tooltip title="Dismiss">
-            <IconButton color="Secondary"  edge="end" aria-label="delete">
-              <Clear />
-            </IconButton>
-          </Tooltip>
-        </ListItemSecondaryAction>
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <ListItem alignItems="flex-start">
+          <ListItemText
+            primary={<>
+              <ReadTitle>It’s still a work in progress but this is our his and hers set up so far!</ReadTitle>
+            </>}
+            secondary={
+              <>
+                Posted by <b>u/AwesomeAdviceBot</b> 17 hours ago
+              </>
+            }
+          />
+          <ListItemSecondaryAction>
+            <Tooltip title="Dismiss">
+              <IconButton color="Secondary" edge="end" aria-label="delete">
+                <Clear />
+              </IconButton>
+            </Tooltip>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <Divider variant="inset" component="li" />
+
+
+{/*      <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
@@ -66,9 +60,9 @@ const PostListItem = ({ pages }) => {
             </IconButton>
           </Tooltip>
         </ListItemSecondaryAction>
-      </ListItem>
+      </ListItem>*/}
 
-      <Divider variant="inset" component="li" />
+{/*      <Divider variant="inset" component="li" />
 
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
@@ -92,10 +86,9 @@ const PostListItem = ({ pages }) => {
             </IconButton>
           </Tooltip>
         </ListItemSecondaryAction>
-      </ListItem>
+      </ListItem>*/}
 
-      <Divider variant="inset" component="li" />
-    </StyledList>
+    </>
   );
 };
 

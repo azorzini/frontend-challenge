@@ -1,9 +1,9 @@
 import React from 'react';
-import { PostList } from '../components';
+import { PostListItem } from '../components';
 
 export default {
-  title: 'PostList',
-  component: PostList,
+  title: 'PostListItem',
+  component: PostListItem,
 };
 
-export const simple = () => <PostList />;
+export const simple = () => <PostListItem />;
