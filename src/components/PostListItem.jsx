@@ -13,13 +13,9 @@ const PostListItem = ({
     data: {
         id,
         title,
-        subreddit_name_prefixed,
-        permalink,
-        post_hint,
         thumbnail,
         author,
         created_utc,
-        url
     }
   }) => {
   const creationDate = getFormattedCreationDate(created_utc);
@@ -56,53 +52,3 @@ const PostListItem = ({
 };
 
 export default PostListItem;
-
-/*      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-
-        <ListItemText
-          primary={<>
-            When my wife's school said they had BBQ for Teacher Appreciation week, she was excited to hear to there was a vegetarian option! It was a potato with BBQ sauce
-          </>}
-          secondary={
-            <>
-              Posted by <b>u/Dmed24</b> 22 hours ago
-            </>
-          }
-        />
-        <ListItemSecondaryAction>
-          <Tooltip title="Dismiss">
-            <IconButton color="Secondary"  edge="end" aria-label="delete">
-              <Clear />
-            </IconButton>
-          </Tooltip>
-        </ListItemSecondaryAction>
-      </ListItem>*/
-
-/*      <Divider variant="inset" component="li" />
-
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-
-        <ListItemText
-          primary={<>
-            They are so ruthless.
-          </>}
-          secondary={
-            <>
-              Posted by <b>u/Maxamillion163</b> 21 hours ago
-            </>
-          }
-        />
-        <ListItemSecondaryAction>
-          <Tooltip title="Dismiss">
-            <IconButton color="Secondary"  edge="end" aria-label="delete">
-              <Clear />
-            </IconButton>
-          </Tooltip>
-        </ListItemSecondaryAction>
-      </ListItem>*/

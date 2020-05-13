@@ -6,34 +6,40 @@ import {
   CardHeader,
   CardMedia,
   CardContent,
-  CardActions,
-  IconButton,
   Typography,
-  makeStyles
 } from '@material-ui/core';
-import {
-  Favorite,
-  Share,
-  ExpandMore,
-} from '@material-ui/icons';
+import { has } from 'lodash';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 500,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%',
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: 'red',
-  },
-}));
 
-const PostDetails = () => {
+const Content = ({post}) => {
+
+  const { post_hint, selftext, title, url, secure_media } = post;
+
+  if (post_hint === 'image') {
+    return <img src={url} className="img-fluid" alt={title} />;
+  }
+  if (post_hint === 'rich:video'){
+
+    if(has(secure_media, 'reddit_video.fallback_url')) {
+      return (
+        <>
+          <video controls autoPlay loop >
+            <source src={secure_media.reddit_video.fallback_url} type="video/mp4" />
+          </video>
+        </>
+      );
+    }
+    return (
+      <Typography> There was an error displaying the video </Typography>
+    );
+  }
+  return <>{<Typography>{selftext}</Typography>}</>;
+
+};
+
+
+const PostDetails = ({post}) => {
+  const { title, subreddit_name_prefixed, author, num_comments, score } = post;
 
   return (
     <Container maxWidth="sm">
@@ -45,17 +51,17 @@ const PostDetails = () => {
         >
         <Card>
           <CardHeader
-            title="When my wife's school said they had BBQ for Teacher Appreciation week, she was excited to hear to there was a vegetarian option! It was a potato with BBQ sauce"
-            subheader="September 14, 2016"
+            title={title}
+            subheader={`${subreddit_name_prefixed} Posted by ${author}`}
           />
           <CardMedia
             image="/static/images/cards/paella.jpg"
             title="Paella dish"
           />
           <CardContent>
+            <Content post={post}/>
             <Typography variant="body2" color="textSecondary" component="p">
-              This impressive paella is a perfect party dish and a fun meal to cook together with your
-              guests. Add 1 cup of frozen peas along with the mussels, if you like.
+              {`With ${<strong>{num_comments}</strong>} comments and a score of ${<strong>{score}</strong>} `}
             </Typography>
           </CardContent>
         </Card>
