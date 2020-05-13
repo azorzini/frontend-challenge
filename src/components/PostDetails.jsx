@@ -7,7 +7,6 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-  Avatar,
   IconButton,
   Typography,
   makeStyles
@@ -26,13 +25,6 @@ const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: '56.25%',
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
   expandOpen: {
     transform: 'rotate(180deg)',
   },
@@ -43,9 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PostDetails = () => {
 
-
-  const classes = useStyles();
-
   return (
     <Container maxWidth="sm">
       <Grid
@@ -54,18 +43,12 @@ const PostDetails = () => {
         justify="center"
         alignItems="center"
         >
-        <Card className={classes.root}>
+        <Card>
           <CardHeader
-/*            avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
-                R
-              </Avatar>
-            }*/
             title="When my wife's school said they had BBQ for Teacher Appreciation week, she was excited to hear to there was a vegetarian option! It was a potato with BBQ sauce"
             subheader="September 14, 2016"
           />
           <CardMedia
-            className={classes.media}
             image="/static/images/cards/paella.jpg"
             title="Paella dish"
           />
@@ -75,19 +58,6 @@ const PostDetails = () => {
               guests. Add 1 cup of frozen peas along with the mussels, if you like.
             </Typography>
           </CardContent>
-          <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <Favorite />
-            </IconButton>
-            <IconButton aria-label="share">
-              <Share />
-            </IconButton>
-            <IconButton
-              aria-label="show more"
-            >
-              <ExpandMore />
-            </IconButton>
-          </CardActions>
         </Card>
       </Grid>
     </Container>

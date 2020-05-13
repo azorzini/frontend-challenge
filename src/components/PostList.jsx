@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { usePosts }  from '../hooks';
 import { last } from 'lodash';
 import { PostListItem } from "../components";
-import {List, CircularProgress, ListItem} from '@material-ui/core';
+import { List, CircularProgress, ListItem } from '@material-ui/core';
 import styled from "styled-components";
 
 const StyledList = styled(List)`
@@ -20,33 +20,31 @@ const Loading = () => (
 );
 
 const PostList = () => {
-
-  const [afterTag, setAfterTag] = useState('')
+  const [afterTag, setAfterTag] = useState('');
   const { posts, loading, error } = usePosts(afterTag);
 
-  const observer = useRef()
+  const observer = useRef();
   const lastPostElementRef = useCallback(node => {
     if (loading) return
     if (observer.current) observer.current.disconnect()
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
-        console.log('visible');
-        setAfterTag(last(posts).data.name)
+        setAfterTag(last(posts).data.name);
       }
     })
-    if (node) observer.current.observe(node)
-  }, [loading])
+    if (node) observer.current.observe(node);
+  }, [loading]);
 
   return (
     <>
       <StyledList>
         {posts.map((post, i) => {
           if (posts.length === i + 1) {
-            return (<div ref={lastPostElementRef}>
-              <PostListItem key={i} data={post.data} />
+            return (<div key={post.data.name} ref={lastPostElementRef}>
+              <PostListItem  data={post.data} />
             </div>);
           } else {
-            return <PostListItem key={i} data={post.data} />
+            return <PostListItem key={post.data.name} data={post.data} />
           }
         })}
         <div>{loading && <Loading />}</div>

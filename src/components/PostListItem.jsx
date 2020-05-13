@@ -1,29 +1,44 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { ListItem, Divider, ListItemText, ListItemAvatar, Avatar, IconButton, ListItemSecondaryAction, Tooltip} from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import defaultThumbnail from '../assets/images/reddit.png';
+import { getFormattedCreationDate } from '../utils';
 
 const ReadTitle = styled.span`
   color: #9b9b9b;
 `;
 
-const PostListItem = () => {
-
+const PostListItem = ({
+    data: {
+        id,
+        title,
+        subreddit_name_prefixed,
+        permalink,
+        post_hint,
+        thumbnail,
+        author,
+        created_utc,
+        url
+    }
+  }) => {
+  const creationDate = getFormattedCreationDate(created_utc);
+  const readPost = false;
   return (
-    <>
+
+      <>
         <ListItem button onClick={() => null} alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src={defaultThumbnail} />
+            <Avatar alt="thumbnail" src={thumbnail ? thumbnail : defaultThumbnail} />
           </ListItemAvatar>
 
           <ListItemText
-            primary={<>
-              <ReadTitle>It’s still a work in progress but this is our his and hers set up so far!</ReadTitle>
-            </>}
+            primary={
+              (readPost ? <ReadTitle>{title}</ReadTitle> : title)
+            }
             secondary={
               <>
-                Posted by <b>u/AwesomeAdviceBot</b> 17 hours ago
+                by <b>u/{author}</b> {creationDate}
               </>
             }
           />
@@ -36,9 +51,13 @@ const PostListItem = () => {
           </ListItemSecondaryAction>
         </ListItem>
         <Divider variant="inset" component="li" />
+      </>
+  );
+};
 
+export default PostListItem;
 
-{/*      <ListItem alignItems="flex-start">
+/*      <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
@@ -60,9 +79,9 @@ const PostListItem = () => {
             </IconButton>
           </Tooltip>
         </ListItemSecondaryAction>
-      </ListItem>*/}
+      </ListItem>*/
 
-{/*      <Divider variant="inset" component="li" />
+/*      <Divider variant="inset" component="li" />
 
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
@@ -86,11 +105,4 @@ const PostListItem = () => {
             </IconButton>
           </Tooltip>
         </ListItemSecondaryAction>
-      </ListItem>*/}
-
-    </>
-  );
-};
-
-export default PostListItem;
-
+      </ListItem>*/
