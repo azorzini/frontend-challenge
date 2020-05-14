@@ -40,11 +40,11 @@ const PostList = () => {
       <StyledList>
         {posts.map((post, i) => {
           if (posts.length === i + 1) {
-            return (<div key={post.data.name} ref={lastPostElementRef}>
+            return (<div key={post.data.id} ref={lastPostElementRef}>
               <PostListItem  data={post.data} />
             </div>);
           } else {
-            return <PostListItem key={post.data.name} data={post.data} />
+            return <PostListItem key={post.data.id} data={post.data} />
           }
         })}
         <div>{loading && <Loading />}</div>

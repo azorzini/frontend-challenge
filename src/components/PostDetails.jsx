@@ -10,8 +10,7 @@ import {
 } from '@material-ui/core';
 import { has } from 'lodash';
 
-
-const Content = ({post}) => {
+const Content = ({ post }) => {
 
   const { post_hint, selftext, title, url, secure_media } = post;
 
@@ -54,14 +53,13 @@ const PostDetails = ({post}) => {
             title={title}
             subheader={`${subreddit_name_prefixed} Posted by ${author}`}
           />
-          <CardMedia
-            image="/static/images/cards/paella.jpg"
-            title="Paella dish"
-          />
-          <CardContent>
+          <CardMedia>
             <Content post={post}/>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {`With ${<strong>{num_comments}</strong>} comments and a score of ${<strong>{score}</strong>} `}
+          </CardMedia>
+          <CardContent>
+
+            <Typography variant="body1" color="textPrimary" component="p">
+              {`With ${num_comments} comments and a score of ${score} `}
             </Typography>
           </CardContent>
         </Card>
