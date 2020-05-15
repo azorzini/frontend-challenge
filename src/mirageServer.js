@@ -15,7 +15,7 @@ export function makeServer({ environment = "test" } = {}) {
         title(){
           return random.boolean() ? lorem.sentence() : lorem.paragraph();
         },
-        thumbnail: 'default',
+        thumbnail: null,
         author(){
           return random.arrayElement(['DonnieMostDefinitely', 'ktmud', 'SidTheKidd', 'ButterSpreadBoi', 'ElZim', 'ThisOtherKid']);
         },

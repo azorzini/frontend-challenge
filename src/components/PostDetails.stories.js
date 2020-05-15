@@ -4,10 +4,10 @@ import React from "react";
 
 let server;
 server = makeServer({ environment: 'dev' });
-const postWithImage = server.create('post', 'withImage');
-const postWithImage2 = server.create('post', 'withImage2');
-const postWithVideoNoFallBack = server.create('post', 'withVideoButWithouthFallback');
-const postWithVideo = server.create('post', 'withVideo');
+const postWithImage = { data: server.create('post', 'withImage').attrs };
+const postWithImage2 = { data: server.create('post', 'withImage2').attrs};
+const postWithVideoNoFallBack = { data: server.create('post', 'withVideoButWithouthFallback').attrs};
+const postWithVideo = { data: server.create('post', 'withVideo').attrs};
 
 export default {
   title: 'PostDetails',
