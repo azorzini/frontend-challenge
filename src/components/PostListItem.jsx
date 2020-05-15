@@ -4,9 +4,10 @@ import { ListItem, Divider, ListItemText, ListItemAvatar, Avatar, IconButton, Li
 import { Clear } from '@material-ui/icons';
 import defaultThumbnail from '../assets/images/reddit.png';
 import { getFormattedCreationDate } from '../utils';
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { selectPost } from "../redux/selectedPostSlice";
 import { dismissSinglePost, markAsRead } from "../redux/allPostsSlice";
+import { has } from 'lodash';
 
 const ReadTitle = styled.span`
   color: #9b9b9b;
@@ -35,11 +36,17 @@ const PostListItem = forwardRef(({ post: {
   const dispatch = useDispatch();
   const creationDate = getFormattedCreationDate(created_utc);
   const hasDefaultThumbnails = thumbnailTypes.includes(thumbnail);
+  const selectedPost = useSelector(state => state.allPosts.find(p => {
+    return p.data.id === state.selectedPost;
+  }));
   const handleCurrentPost = () => {
     dispatch(selectPost(id));
     dispatch(markAsRead(id));
   }
   const handleDismissPost = () => {
+    if(has(selectedPost, 'data.id') && selectedPost.data.id === id){
+      dispatch(selectPost(null));
+    }
     dispatch(dismissSinglePost(id));
   }
 

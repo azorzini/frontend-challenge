@@ -8,7 +8,7 @@ const AllPostsSlice = createSlice({
       return [...state, ...action.payload.map(p => ({ ...p, read: false, dismissed: false}))];
     },
     dismissPosts: (state) => {
-      return state.map(p => ({...p, dismissed: true}));
+      return [];
     },
     dismissSinglePost: (state, action) => {
       const postToDismiss = state.find(post => post.data.id === action.payload);

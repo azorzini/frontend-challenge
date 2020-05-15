@@ -17,18 +17,8 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { dismissPosts } from "../redux/allPostsSlice";
 import { usePosts } from "../hooks";
+import { selectPost } from "../redux/selectedPostSlice";
 
-const RootDiv = styled.div`
-  display: flex;
-`;
-
-const StyledTypography = styled(Typography)`
-  flex-grow: 1;
-`;
-
-const StyledButton = styled(Button)`
-  margin-right: 20px;
-`;
 
 const drawerWidth = 500;
 //necessary to useTheme
@@ -70,6 +60,10 @@ const ResponsiveDrawer = (props) =>  {
   const [afterTag, setAfterTag] = useState('');
   const { posts, loading, error, selectedPost, loadPosts } = usePosts(afterTag);
 
+  const handleLoadPosts = () => {
+    loadPosts();
+  }
+
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -82,6 +76,7 @@ const ResponsiveDrawer = (props) =>  {
 
   const handleDismiss = () => {
     dispatch(dismissPosts());
+    dispatch(selectPost(null));
   }
 
   const drawer = (
@@ -111,7 +106,7 @@ const ResponsiveDrawer = (props) =>  {
           <StyledTypography variant="h6" noWrap>
             Reddit posts
           </StyledTypography>
-          <StyledButton disabled={!posts.every( p => p.dismissed)} onClick={loadPosts} variant="contained">
+          <StyledButton disabled={!posts.every( p => p.dismissed)} onClick={handleLoadPosts} variant="contained">
             Load More
           </StyledButton>
           <Button onClick={handleDismiss} variant="contained" color="secondary">
@@ -155,3 +150,15 @@ const ResponsiveDrawer = (props) =>  {
 }
 
 export default ResponsiveDrawer;
+
+const RootDiv = styled.div`
+  display: flex;
+`;
+
+const StyledTypography = styled(Typography)`
+  flex-grow: 1;
+`;
+
+const StyledButton = styled(Button)`
+  margin-right: 20px;
+`;
