@@ -62,7 +62,7 @@ const PostListItem = forwardRef(({ post: {
           />
           <ListItemSecondaryAction>
             <Tooltip title="Dismiss">
-              <IconButton onClick={handleDismissPost} color="Secondary" edge="end" aria-label="delete">
+              <IconButton onClick={handleDismissPost} color="secondary" edge="end" aria-label="delete">
                 <Clear />
               </IconButton>
             </Tooltip>

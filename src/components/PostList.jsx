@@ -40,7 +40,7 @@ const PostList = ({posts, setAfterTag, loading, error}) => {
       observer.unobserve(lastElement);
     }
 
-  },[loading, posts])
+  },[loading, posts, setAfterTag])
 
   return (
     <StyledList>

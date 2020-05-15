@@ -36,12 +36,12 @@ const usePosts = (after) => {
       if (axios.isCancel(e)) return
       setError(true)
     }
-  }, [after]);
+  }, [after, dispatch]);
 
   useEffect(() => {
     if(after === previousAfterTag) return ;
     loadPosts();
-  }, [dispatch, loadPosts, previousAfterTag])
+  }, [dispatch, loadPosts, previousAfterTag, after])
 
   return { loading, error, posts, selectedPost, loadPosts }
 }

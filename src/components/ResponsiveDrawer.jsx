@@ -15,8 +15,8 @@ import { Menu }  from '@material-ui/icons';
 import {PostDetails, PostList} from "../components";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { dismissPosts, addPosts } from "../redux/allPostsSlice";
-import {usePosts} from "../hooks";
+import { dismissPosts } from "../redux/allPostsSlice";
+import { usePosts } from "../hooks";
 
 const RootDiv = styled.div`
   display: flex;
@@ -25,7 +25,12 @@ const RootDiv = styled.div`
 const StyledTypography = styled(Typography)`
   flex-grow: 1;
 `;
-const drawerWidth = 400;
+
+const StyledButton = styled(Button)`
+  margin-right: 20px;
+`;
+
+const drawerWidth = 500;
 //necessary to useTheme
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -46,12 +51,15 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-  toolbar: theme.mixins.toolbar,
+  toolbar: {
+    minWidth: 580,
+    ...theme.mixins.toolbar
+  },
   drawerPaper: {
     width: drawerWidth,
   },
   content: {
-    width: 500,
+    width: 600,
     flexGrow: 1,
     padding: theme.spacing(3),
   },
@@ -103,9 +111,9 @@ const ResponsiveDrawer = (props) =>  {
           <StyledTypography variant="h6" noWrap>
             Reddit posts
           </StyledTypography>
-          <Button disabled={!posts.every( p => p.dismissed)} onClick={loadPosts} variant="contained" color="secondary">
+          <StyledButton disabled={!posts.every( p => p.dismissed)} onClick={loadPosts} variant="contained">
             Load More
-          </Button>
+          </StyledButton>
           <Button onClick={handleDismiss} variant="contained" color="secondary">
             Dismiss All
           </Button>

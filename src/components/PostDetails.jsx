@@ -8,43 +8,58 @@ import {
   CardContent,
   Typography,
 } from '@material-ui/core';
-import { has } from 'lodash';
 import styled from "styled-components";
+
+const StyledImg = styled.img`
+  max-width: 100%; 
+  display:block; 
+  height: auto;
+`;
 
 const Content = ({ post }) => {
 
-  const { post_hint, selftext, title, url, secure_media } = post.data;
+  const { post_hint, selftext, title, url, secure_media, preview } = post.data;
 
-  if (post_hint === 'image') {
-    return <img src={url} className="img-fluid" alt={title} />;
-  }
-  if (post_hint === 'rich:video'){
-
-    if(has(secure_media, 'reddit_video.fallback_url')) {
+  switch (post_hint) {
+    case 'image':
+      return <StyledImg src={url} alt={title} />;
+    case 'hosted:video':
+    case 'link':
+    case 'rich:video':
+      const { fallback_url } = preview?.reddit_video_preview ??
+      secure_media?.reddit_video ?? { fallback_url: null };
+      if (!fallback_url)
+        return <StyledTypography> There was an error displaying the video </StyledTypography>
       return (
-        <>
-          <video controls autoPlay loop >
-            <source src={secure_media.reddit_video.fallback_url} type="video/mp4" />
+        <div className="embed-responsive embed-responsive-1by1">
+          <video controls autoPlay loop className="embed-responsive-item">
+            <source src={fallback_url} type="video/mp4" />
           </video>
-        </>
+        </div>
       );
-    }
-    return (
-      <StyledTypography> There was an error displaying the video </StyledTypography>
-    );
+    default:
+      return <>{<Typography>{selftext}</Typography>}</>;
   }
-  return <>{<Typography>{selftext}</Typography>}</>;
-
 };
+
+const SelectPostDetails = () => {
+  return (
+    <CenteredTextCard >
+      <CardHeader
+        title={'Select a post to see details'}
+      />
+    </CenteredTextCard>
+  );
+}
 
 
 const PostDetails = ({post}) => {
-  if(!post) return null;
+  if(!post) return <SelectPostDetails />;
 
   const { title, subreddit_name_prefixed, author, num_comments, score } = post.data;
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Grid
         container
         direction="row"
@@ -68,7 +83,6 @@ const PostDetails = ({post}) => {
       </Grid>
     </Container>
   );
-
 };
 
 export default PostDetails;
@@ -81,4 +95,8 @@ const StyledCardMedia = styled(CardMedia)`
 const StyledTypography = styled(Typography)`
   text-align: -webkit-center;
   margin: 10px 0;
+`;
+
+const CenteredTextCard = styled(Card)`
+  text-align: -webkit-center;
 `;
