@@ -1,5 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { usePosts }  from '../hooks';
+import React, { useRef, useEffect} from 'react';
 import { last } from 'lodash';
 import { PostListItem } from "../components";
 import { List, CircularProgress, ListItem } from '@material-ui/core';
@@ -19,39 +18,45 @@ const Loading = () => (
   </StyledListItem>
 );
 
-const PostList = () => {
-  const [afterTag, setAfterTag] = useState('');
-  const { posts, loading, error } = usePosts(afterTag);
+const PostList = ({posts, setAfterTag, loading, error}) => {
 
-  const observer = useRef();
-  const lastPostElementRef = useCallback(node => {
+  const lastElementRef = useRef();
+
+  useEffect(() => {
     if (loading) return
-    if (observer.current) observer.current.disconnect()
-    observer.current = new IntersectionObserver(entries => {
+    const lastElement = lastElementRef.current;
+    if (!lastElement) return
+
+    const observer = (new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
         setAfterTag(last(posts).data.name);
       }
-    })
-    if (node) observer.current.observe(node);
-  }, [loading]);
+    }));
+
+    observer.observe(lastElementRef.current);
+
+    return () => {
+      if (!lastElement) return
+      observer.unobserve(lastElement);
+    }
+
+  },[loading, posts])
 
   return (
-    <>
-      <StyledList>
-        {posts.map((post, i) => {
-          if (posts.length === i + 1) {
-            return (<div key={post.data.id} ref={lastPostElementRef}>
-              <PostListItem  data={post.data} />
-            </div>);
-          } else {
-            return <PostListItem key={post.data.id} data={post.data} />
-          }
-        })}
-        <div>{loading && <Loading />}</div>
+    <StyledList>
+      {posts.map((post, i) => {
+        if (posts.length === i + 1) {
+          return (
+            <PostListItem key={post.data.id} ref={lastElementRef} post={post} />
+          );
+        } else {
+          return <PostListItem key={post.data.id} post={post} />
+        }
+      })}
+      <div>{loading && <Loading />}</div>
 
-        <div>{error && 'Error'}</div>
-      </StyledList>
-    </>
+      <div>{error && 'Error'}</div>
+    </StyledList>
   )
 
 };

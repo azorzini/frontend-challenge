@@ -9,10 +9,11 @@ import {
   Typography,
 } from '@material-ui/core';
 import { has } from 'lodash';
+import styled from "styled-components";
 
 const Content = ({ post }) => {
 
-  const { post_hint, selftext, title, url, secure_media } = post;
+  const { post_hint, selftext, title, url, secure_media } = post.data;
 
   if (post_hint === 'image') {
     return <img src={url} className="img-fluid" alt={title} />;
@@ -29,7 +30,7 @@ const Content = ({ post }) => {
       );
     }
     return (
-      <Typography> There was an error displaying the video </Typography>
+      <StyledTypography> There was an error displaying the video </StyledTypography>
     );
   }
   return <>{<Typography>{selftext}</Typography>}</>;
@@ -38,7 +39,9 @@ const Content = ({ post }) => {
 
 
 const PostDetails = ({post}) => {
-  const { title, subreddit_name_prefixed, author, num_comments, score } = post;
+  if(!post) return null;
+
+  const { title, subreddit_name_prefixed, author, num_comments, score } = post.data;
 
   return (
     <Container maxWidth="sm">
@@ -53,13 +56,12 @@ const PostDetails = ({post}) => {
             title={title}
             subheader={`${subreddit_name_prefixed} Posted by ${author}`}
           />
-          <CardMedia>
+          <StyledCardMedia>
             <Content post={post}/>
-          </CardMedia>
+          </StyledCardMedia>
           <CardContent>
-
             <Typography variant="body1" color="textPrimary" component="p">
-              {`With ${num_comments} comments and a score of ${score} `}
+              With <strong>{num_comments}</strong> comments and a score of <strong>{score}</strong>
             </Typography>
           </CardContent>
         </Card>
@@ -70,3 +72,13 @@ const PostDetails = ({post}) => {
 };
 
 export default PostDetails;
+
+const StyledCardMedia = styled(CardMedia)`
+  text-align: -webkit-center;
+  margin: 20px 20px;
+`;
+
+const StyledTypography = styled(Typography)`
+  text-align: -webkit-center;
+  margin: 10px 0;
+`;

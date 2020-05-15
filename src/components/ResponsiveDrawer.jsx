@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { AppBar,
   CssBaseline,
   Divider,
@@ -14,6 +14,9 @@ import { AppBar,
 import { Menu }  from '@material-ui/icons';
 import {PostDetails, PostList} from "../components";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { dismissPosts, addPosts } from "../redux/allPostsSlice";
+import {usePosts} from "../hooks";
 
 const RootDiv = styled.div`
   display: flex;
@@ -55,20 +58,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ResponsiveDrawer = (props) =>  {
+
+  const [afterTag, setAfterTag] = useState('');
+  const { posts, loading, error, selectedPost, loadPosts } = usePosts(afterTag);
+
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleDismiss = () => {
+    dispatch(dismissPosts());
+  }
+
   const drawer = (
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <PostList />
+      <PostList posts={posts} setAfterTag={setAfterTag} loading={loading} error={error} />
     </div>
   );
 
@@ -91,7 +103,10 @@ const ResponsiveDrawer = (props) =>  {
           <StyledTypography variant="h6" noWrap>
             Reddit posts
           </StyledTypography>
-          <Button variant="contained" color="secondary">
+          <Button disabled={!posts.every( p => p.dismissed)} onClick={loadPosts} variant="contained" color="secondary">
+            Load More
+          </Button>
+          <Button onClick={handleDismiss} variant="contained" color="secondary">
             Dismiss All
           </Button>
         </Toolbar>
@@ -106,9 +121,6 @@ const ResponsiveDrawer = (props) =>  {
             onClose={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true,
             }}
           >
             {drawer}
@@ -128,7 +140,7 @@ const ResponsiveDrawer = (props) =>  {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {/*<PostDetails flex />*/}
+        <PostDetails post={selectedPost} flex />
       </main>
     </RootDiv>
   );
